@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details - Sherubtse College</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="/img/logo.jpg" alt="Sherubtse College Logo" class="logo">
+                <div>
+                    <div class="logo-text">Sherubtse College</div>
+                    <div class="college-subtitle">Student Details</div>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="/admin/dashboard" class="nav-btn">Dashboard</a>
+                <a href="/admin/students" class="nav-btn">Students</a>
+                <a href="/admin/add-student" class="nav-btn">Add Student</a>
+                <a href="/logout" class="nav-btn">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="fade-in-up">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                <a href="/admin/students" class="btn btn-outline">← Back to Students</a>
+                <h1 style="margin: 0; color: var(--gray-900);">Student Details</h1>
+                <div style="margin-left: auto;">
+                    <a href="/admin/edit-student/<%= student.id %>" class="btn btn-primary">Edit Student</a>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <!-- Student Profile -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Profile Information</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+                            <% if (student.profile_image) { %>
+                                <img src="<%= student.profile_image %>" alt="Profile" class="profile-image">
+                            <% } else { %>
+                                <div style="width: 120px; height: 120px; border-radius: 50%; background: var(--sherubtse-blue); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 2rem;">
+                                    <%= student.first_name ? student.first_name.charAt(0) : '👤' %>
+                                </div>
+                            <% } %>
+                            <h3 style="margin: 0; color: var(--gray-900);"><%= student.first_name %> <%= student.last_name %></h3>
+                            <p style="color: var(--gray-600); margin: 0.5rem 0;"><%= student.email %></p>
+                            <span class="badge badge-<%= student.status === 'active' ? 'success' : student.status === 'inactive' ? 'warning' : 'danger' %>">
+                                <%= student.status || 'active' %>
+                            </span>
+                        </div>
+
+                        <div style="display: grid; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                <span style="color: var(--gray-600); font-weight: 500;">Student ID:</span>
+                                <span style="font-weight: 500;"><%= student.student_id %></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                <span style="color: var(--gray-600); font-weight: 500;">Date of Birth:</span>
+                                <span style="font-weight: 500;"><%= student.date_of_birth ? new Date(student.date_of_birth).toLocaleDateString() : 'Not provided' %></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                <span style="color: var(--gray-600); font-weight: 500;">Gender:</span>
+                                <span style="font-weight: 500;"><%= student.gender || 'Not specified' %></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                <span style="color: var(--gray-600); font-weight: 500;">Phone:</span>
+                                <span style="font-weight: 500;"><%= student.phone || 'Not provided' %></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                <span style="color: var(--gray-600); font-weight: 500;">Admission Date:</span>
+                                <span style="font-weight: 500;"><%= student.admission_date ? new Date(student.admission_date).toLocaleDateString() : 'N/A' %></span>
+                            </div>
+                        </div>
+
+                        <% if (student.address) { %>
+                            <div style="margin-top: 1rem;">
+                                <h4 style="color: var(--gray-700); margin-bottom: 0.5rem;">Address</h4>
+                                <p style="color: var(--gray-600); background: var(--gray-50); padding: 1rem; border-radius: var(--border-radius); margin: 0;">
+                                    <%= student.address %>
+                                </p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Academic & Parent Info -->
+                <div>
+                    <!-- Academic Information -->
+                    <div class="card" style="margin-bottom: 1.5rem;">
+                        <div class="card-header">
+                            <h3 class="card-title">Academic Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; gap: 1rem;">
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                    <span style="color: var(--gray-600); font-weight: 500;">Department:</span>
+                                    <span style="font-weight: 500;"><%= student.department || 'Not specified' %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                    <span style="color: var(--gray-600); font-weight: 500;">Program:</span>
+                                    <span style="font-weight: 500;"><%= student.program || 'Not specified' %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                    <span style="color: var(--gray-600); font-weight: 500;">Year of Study:</span>
+                                    <span style="font-weight: 500;"><%= student.year_of_study ? student.year_of_study + (student.year_of_study == 1 ? 'st' : student.year_of_study == 2 ? 'nd' : student.year_of_study == 3 ? 'rd' : 'th') + ' Year' : 'Not specified' %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                    <span style="color: var(--gray-600); font-weight: 500;">Semester:</span>
+                                    <span style="font-weight: 500;"><%= student.semester ? student.semester + (student.semester == 1 ? 'st' : 'nd') + ' Semester' : 'Not specified' %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                    <span style="color: var(--gray-600); font-weight: 500;">Batch Year:</span>
+                                    <span style="font-weight: 500;"><%= student.batch_year || 'Not specified' %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                    <span style="color: var(--gray-600); font-weight: 500;">CGPA:</span>
+                                    <span style="font-weight: 500;"><%= student.cgpa || 'Not available' %></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parent/Guardian Information -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Parent/Guardian Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; gap: 1rem;">
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                    <span style="color: var(--gray-600); font-weight: 500;">Parent/Guardian Name:</span>
+                                    <span style="font-weight: 500;"><%= student.parent_name || 'Not provided' %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: var(--gray-50); border-radius: var(--border-radius);">
+                                    <span style="color: var(--gray-600); font-weight: 500;">Parent/Guardian Phone:</span>
+                                    <span style="font-weight: 500;"><%= student.parent_phone || 'Not provided' %></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

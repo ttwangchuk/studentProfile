@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Sherubtse College</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="/img/logo.jpg" alt="Sherubtse College Logo" class="logo">
+                <div>
+                    <div class="logo-text">Sherubtse College</div>
+                    <div class="college-subtitle">Student Portal</div>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="/student/dashboard" class="nav-btn">Dashboard</a>
+                <a href="/student/profile" class="nav-btn">Profile</a>
+                <a href="/logout" class="nav-btn">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="fade-in-up">
+            <h1 style="margin-bottom: 2rem; color: var(--gray-900);">
+                Welcome back, <%= user ? user.name : 'Student' %>! 👋
+            </h1>
+
+            <% if (message) { %>
+                <div class="alert alert-success">
+                    <%= message %>
+                </div>
+            <% } %>
+
+            <div class="grid grid-2">
+                <!-- Profile Overview -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Profile Overview</h3>
+                    </div>
+                    <div class="card-body">
+                        <% if (student) { %>
+                            <div style="text-align: center; margin-bottom: 1.5rem;">
+                                <% if (student.profile_image) { %>
+                                    <img src="<%= student.profile_image %>" alt="Profile" class="profile-image">
+                                <% } else { %>
+                                    <div style="width: 120px; height: 120px; border-radius: 50%; background: var(--sherubtse-blue); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 2rem;">
+                                        <%= student.first_name ? student.first_name.charAt(0) : '👤' %>
+                                    </div>
+                                <% } %>
+                                <h4 style="margin: 0; color: var(--gray-900);"><%= student.first_name %> <%= student.last_name %></h4>
+                                <p style="color: var(--gray-600); margin: 0.5rem 0;">Student ID: <%= student.student_id || 'Not assigned' %></p>
+                                <span class="badge badge-<%= student.status === 'active' ? 'success' : student.status === 'pending' ? 'warning' : 'info' %>">
+                                    <%= student.status || 'Active' %>
+                                </span>
+                            </div>
+                            
+                            <div style="display: grid; gap: 1rem;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--gray-600);">Department:</span>
+                                    <span style="font-weight: 500;"><%= student.department ? student.department : 'Not specified' %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--gray-600);">Program:</span>
+                                    <span style="font-weight: 500;"><%= student.program ? student.program : 'Not specified' %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--gray-600);">Year:</span>
+                                    <span style="font-weight: 500;">
+                                        <% if (student.year_of_study != null) { %>
+                                            <%= student.year_of_study %><%= student.year_of_study == 1 ? 'st' : student.year_of_study == 2 ? 'nd' : student.year_of_study == 3 ? 'rd' : 'th' %> Year
+                                        <% } else { %>
+                                            Not specified
+                                        <% } %>
+                                    </span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: var(--gray-600);">CGPA:</span>
+                                    <span style="font-weight: 500;"><%= student.cgpa != null ? student.cgpa : 'Not available' %></span>
+                                </div>
+                            </div>
+                        <% } else { %>
+                            <div style="text-align: center; padding: 2rem;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">📝</div>
+                                <h4 style="margin-bottom: 1rem; color: var(--gray-700);">Complete Your Profile</h4>
+                                <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Your profile is not yet set up. Please complete your information.</p>
+                                <a href="/student/profile" class="btn btn-primary">Complete Profile</a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Quick Actions</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; gap: 1rem;">
+                            <a href="/student/profile" class="btn btn-outline-primary" style="justify-content: flex-start;">
+                                <span style="margin-right: 0.5rem;">👤</span>
+                                <%= student ? 'Edit Profile' : 'Complete Profile' %>
+                            </a>
+                            
+                            <button class="btn btn-outline" style="justify-content: flex-start;" disabled>
+                                <span style="margin-right: 0.5rem;">📚</span>
+                                View Courses (Coming Soon)
+                            </button>
+                            
+                            <button class="btn btn-outline" style="justify-content: flex-start;" disabled>
+                                <span style="margin-right: 0.5rem;">📊</span>
+                                Academic Records (Coming Soon)
+                            </button>
+                            
+                            <button class="btn btn-outline" style="justify-content: flex-start;" disabled>
+                                <span style="margin-right: 0.5rem;">📅</span>
+                                Schedule (Coming Soon)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- College Information -->
+            <div class="card" style="margin-top: 2rem;">
+                <div class="card-header">
+                    <h3 class="card-title">Sherubtse College Information</h3>
+                </div>
+                <div class="card-body">
+                    <div style="text-align: center; padding: 1rem;">
+                        <p style="color: var(--gray-600); line-height: 1.6; margin-bottom: 1rem;">
+                            Welcome to Sherubtse College, Bhutan's premier institution of higher learning. 
+                            Established in 1983, we are committed to providing quality education and fostering 
+                            academic excellence in our students.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--sherubtse-blue);">40+</div>
+                                <div style="font-size: 0.875rem; color: var(--gray-600);">Years of Excellence</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--sherubtse-green);">3000+</div>
+                                <div class="college-stat-label">Students</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--sherubtse-gold);">15+</div>
+                                <div class="college-stat-label">Programs</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--accent-color);">100+</div>
+                                <div class="college-stat-label">Faculty</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

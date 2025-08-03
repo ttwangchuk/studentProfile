@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students - Sherubtse College</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="/img/logo.jpg" alt="Sherubtse College Logo" class="logo">
+                <div>
+                    <div class="logo-text">Sherubtse College</div>
+                    <div class="college-subtitle">Student Management</div>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="/admin/dashboard" class="nav-btn">Dashboard</a>
+                <a href="/admin/students" class="nav-btn">Students</a>
+                <a href="/admin/add-student" class="nav-btn">Add Student</a>
+                <a href="/logout" class="nav-btn">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="fade-in-up">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1 style="margin: 0; color: var(--gray-900);">Student Management</h1>
+                <a href="/admin/add-student" class="btn btn-primary">
+                    <span style="margin-right: 0.5rem;">➕</span>
+                    Add New Student
+                </a>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="search-filters">
+                <form method="GET" action="/admin/students">
+                    <div class="filter-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="text" name="search" class="form-input" 
+                                   placeholder="Search by name or student ID..." 
+                                   value="<%= filters.search || '' %>">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <select name="department" class="form-select">
+                                <option value="">All Departments</option>
+                                <% departments.forEach(dept => { %>
+                                    <option value="<%= dept.department %>" 
+                                            <%= filters.department === dept.department ? 'selected' : '' %>>
+                                        <%= dept.department %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <select name="program" class="form-select">
+                                <option value="">All Programs</option>
+                                <% programs.forEach(prog => { %>
+                                    <option value="<%= prog.program %>" 
+                                            <%= filters.program === prog.program ? 'selected' : '' %>>
+                                        <%= prog.program %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <select name="year" class="form-select">
+                                <option value="">All Years</option>
+                                <option value="1" <%= filters.year === '1' ? 'selected' : '' %>>1st Year</option>
+                                <option value="2" <%= filters.year === '2' ? 'selected' : '' %>>2nd Year</option>
+                                <option value="3" <%= filters.year === '3' ? 'selected' : '' %>>3rd Year</option>
+                                <option value="4" <%= filters.year === '4' ? 'selected' : '' %>>4th Year</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Students Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Students (<%= students.length %>)</h3>
+                </div>
+                <div class="table-container">
+                    <% if (students.length > 0) { %>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Student ID</th>
+                                    <th>Department</th>
+                                    <th>Program</th>
+                                    <th>Year</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% students.forEach(student => { %>
+                                    <tr>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                                <% if (student.profile_image) { %>
+                                                    <img src="<%= student.profile_image %>" alt="Profile" 
+                                                         style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                                                <% } else { %>
+                                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--sherubtse-blue); display: flex; align-items: center; justify-content: center; color: white; font-weight: 500;">
+                                                        <%= student.first_name ? student.first_name.charAt(0) : '?' %>
+                                                    </div>
+                                                <% } %>
+                                                <div>
+                                                    <div style="font-weight: 500; color: var(--gray-900);">
+                                                        <%= student.first_name %> <%= student.last_name %>
+                                                    </div>
+                                                    <div style="font-size: 0.875rem; color: var(--gray-600);">
+                                                        <%= student.email %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><%= student.student_id %></td>
+                                        <td><%= student.department || 'Not specified' %></td>
+                                        <td><%= student.program || 'Not specified' %></td>
+                                        <td><%= student.year_of_study ? student.year_of_study + (student.year_of_study == 1 ? 'st' : student.year_of_study == 2 ? 'nd' : student.year_of_study == 3 ? 'rd' : 'th') + ' Year' : 'Not specified' %></td>
+                                        <td>
+                                            <span class="badge badge-<%= student.status === 'active' ? 'success' : student.status === 'inactive' ? 'warning' : 'danger' %>">
+                                                <%= student.status || 'active' %>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <a href="/admin/student/<%= student.id %>" class="btn btn-outline btn-sm">
+                                                    View
+                                                </a>
+                                                <a href="/admin/edit-student/<%= student.id %>" class="btn btn-primary btn-sm">
+                                                    Edit
+                                                </a>
+                                                <form action="/admin/delete-student/<%= student.id %>" method="POST" style="display: inline;" 
+                                                      onsubmit="return confirm('Are you sure you want to delete this student?')">
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    <% } else { %>
+                        <div style="text-align: center; padding: 3rem; color: var(--gray-500);">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+                            <h3 style="margin-bottom: 0.5rem; color: var(--gray-700);">No Students Found</h3>
+                            <p>No students match your current search criteria.</p>
+                            <a href="/admin/add-student" class="btn btn-primary" style="margin-top: 1rem;">
+                                Add First Student
+                            </a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

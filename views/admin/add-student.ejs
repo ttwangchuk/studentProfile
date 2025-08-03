@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student - Sherubtse College</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="/img/logo.jpg" alt="Sherubtse College Logo" class="logo">
+                <div>
+                    <div class="logo-text">Sherubtse College</div>
+                    <div class="college-subtitle">Add New Student</div>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="/admin/dashboard" class="nav-btn">Dashboard</a>
+                <a href="/admin/students" class="nav-btn">Students</a>
+                <a href="/admin/add-student" class="nav-btn">Add Student</a>
+                <a href="/logout" class="nav-btn">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="fade-in-up">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                <a href="/admin/students" class="btn btn-outline">← Back to Students</a>
+                <h1 style="margin: 0; color: var(--gray-900);">Add New Student</h1>
+            </div>
+
+            <% if (message) { %>
+                <div class="alert alert-<%= message.includes('successfully') ? 'success' : 'error' %>">
+                    <%= message %>
+                </div>
+            <% } %>
+
+            <form action="/admin/add-student" method="POST">
+                <div class="grid grid-2">
+                    <!-- Personal Information -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Personal Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Full Name *</label>
+                                <input type="text" id="name" name="name" class="form-input" 
+                                       placeholder="Enter full name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" id="email" name="email" class="form-input" 
+                                       placeholder="Enter email address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="student_id" class="form-label">Student ID *</label>
+                                <input type="text" id="student_id" name="student_id" class="form-input" 
+                                       placeholder="Enter student ID" required>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="first_name" class="form-label">First Name *</label>
+                                    <input type="text" id="first_name" name="first_name" class="form-input" 
+                                           placeholder="First name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="last_name" class="form-label">Last Name *</label>
+                                    <input type="text" id="last_name" name="last_name" class="form-input" 
+                                           placeholder="Last name" required>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="date_of_birth" class="form-label">Date of Birth</label>
+                                    <input type="date" id="date_of_birth" name="date_of_birth" class="form-input">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <select id="gender" name="gender" class="form-select">
+                                        <option value="">Select gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" 
+                                       placeholder="Enter phone number">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address" class="form-label">Address</label>
+                                <textarea id="address" name="address" class="form-textarea" 
+                                          placeholder="Enter address"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profile_image" class="form-label">Profile Image URL</label>
+                                <input type="url" id="profile_image" name="profile_image" class="form-input" 
+                                       placeholder="Enter image URL">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Academic & Parent Information -->
+                    <div>
+                        <!-- Academic Information -->
+                        <div class="card" style="margin-bottom: 1.5rem;">
+                            <div class="card-header">
+                                <h3 class="card-title">Academic Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="department" class="form-label">Department</label>
+                                    <select id="department" name="department" class="form-select">
+                                        <option value="">Select department</option>
+                                        <option value="Department of Science">Department of Science</option>
+                                        <option value="Department of Arts & Humanities">Department of Arts & Humanities</option>
+                                        <option value="Department of Commerce">Department of Commerce</option>
+                                        <option value="Department of Education">Department of Education</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="program" class="form-label">Program</label>
+                                    <input type="text" id="program" name="program" class="form-input" 
+                                           placeholder="e.g., Bachelor of Science">
+                                </div>
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="year_of_study" class="form-label">Year of Study</label>
+                                        <select id="year_of_study" name="year_of_study" class="form-select">
+                                            <option value="">Select year</option>
+                                            <option value="1">1st Year</option>
+                                            <option value="2">2nd Year</option>
+                                            <option value="3">3rd Year</option>
+                                            <option value="4">4th Year</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="semester" class="form-label">Current Semester</label>
+                                        <select id="semester" name="semester" class="form-select">
+                                            <option value="">Select semester</option>
+                                            <option value="1">1st Semester</option>
+                                            <option value="2">2nd Semester</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="batch_year" class="form-label">Batch Year</label>
+                                    <input type="number" id="batch_year" name="batch_year" class="form-input" 
+                                           placeholder="e.g., 2024" min="2020" max="2030">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parent/Guardian Information -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Parent/Guardian Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="parent_name" class="form-label">Parent/Guardian Name</label>
+                                    <input type="text" id="parent_name" name="parent_name" class="form-input" 
+                                           placeholder="Parent/Guardian name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="parent_phone" class="form-label">Parent/Guardian Phone</label>
+                                    <input type="tel" id="parent_phone" name="parent_phone" class="form-input" 
+                                           placeholder="Parent/Guardian phone number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                        Add Student
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

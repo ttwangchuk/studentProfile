@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - StudentHub</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="/" style="text-decoration: none; color: white;">
+                    <div class="logo-text">🎓 StudentHub</div>
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="/" class="nav-btn">Home</a>
+                <a href="/login" class="nav-btn">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div style="max-width: 500px; margin: 0 auto;">
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title" style="text-align: center;">Create Your Account</h2>
+                </div>
+                <div class="card-body">
+                    <% if (message) { %>
+                        <div class="alert alert-<%= message.includes('successful') ? 'success' : 'error' %>">
+                            <%= message %>
+                        </div>
+                    <% } %>
+
+                    <form action="/signup" method="POST">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" name="password" class="form-input" placeholder="Create a password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role" class="form-label">Account Type</label>
+                            <select id="role" name="role" class="form-select">
+                                <option value="student">Student</option>
+                                <option value="admin">Administrator</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-200);">
+                        <p style="color: var(--gray-600);">Already have an account? <a href="/login" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">Sign in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Error - StudentHub</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="/" style="text-decoration: none; color: white;">
+                    <div class="logo-text">🎓 StudentHub</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <div class="card fade-in-up">
+                <div class="card-body" style="padding: 3rem 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">❌</div>
+                    <h2 style="color: var(--danger-color); margin-bottom: 1rem;">Verification Failed</h2>
+                    <p style="color: var(--gray-600); margin-bottom: 2rem; font-size: 1.1rem;"><%= message %></p>
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <a href="/signup" class="btn btn-primary">Sign Up Again</a>
+                        <a href="/" class="btn btn-outline">Go Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
